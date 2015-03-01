@@ -1,0 +1,25 @@
+# global application settings
+info:
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    description: ${project.description}
+    version: ${project.version}
+    
+# connections settings
+connection:
+  username: admin
+  password: admin
+  remoteAddress: 192.168.1.1
+---
+spring:
+  profiles: unit-test
+connection:
+  password: admintest
+  remoteAddress: 192.168.1.2
+---
+spring:
+  profiles: production
+connection:
+  password: adminprod
+  remoteAddress: 192.168.1.3
