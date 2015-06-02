@@ -12,25 +12,26 @@
 		<jdk.version>1.7</jdk.version>
 	</properties>
 
-	<!-- Define spring-boot-starter-parent as parent is required for spring boot -->
+	<!-- Define spring-boot-starter-parent as parent is required for spring 
+		boot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.1.10.RELEASE</version>
+		<version>1.2.3.RELEASE</version>
 	</parent>
 
 	<dependencies>
-		<!-- Spring Boot dependency for web application  -->
+		<!-- Spring Boot dependency for web application -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- Exclude the Tomcat Embeded of the war -->
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -47,6 +48,43 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<!-- Jetty configuration : mvn jetty:run -->
+			<!-- Test url : http://localhost:8080/jetty/hello -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.9.v20150224</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/jetty</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+			<!-- Cargo configuration for Tomcat : mvn cargo:run -->
+			<!-- Test url : http://localhost:8080/tomcat/hello -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.14</version>
+				<configuration>
+					<container>
+						<containerId>tomcat8x</containerId>
+						<log>${project.build.directory}/cargo/logs/cargo.log</log>
+						<output>${project.build.directory}/cargo/logs/container.log</output>
+					</container>
+					<deployables>
+						<deployable>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<type>war</type>
+							<properties>
+								<context>/tomcat</context>
+							</properties>
+						</deployable>
+					</deployables>
 				</configuration>
 			</plugin>
 		</plugins>
