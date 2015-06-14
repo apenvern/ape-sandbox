@@ -1,0 +1,16 @@
+# Fichier de configuration du build maven de l application Antenne WS
+# Ce fichier est au format Yaml attention il ne faut pas remplacer les espaces par des tabulations.
+
+# Information sur l'application
+info:
+  artifact: @project.artifactId@
+  name: @project.name@
+  description: @project.description@
+  version: @project.version@
+  date: @timestamp@
+
+# Configuration de Spring Actuator
+spring.boot.admin:
+  url: http://localhost:8081/spring-boot-admin
+  client.serviceUrl: http://localhost:8080/tomcat/
+
